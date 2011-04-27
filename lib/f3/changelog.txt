@@ -1,0 +1,140 @@
+CHANGELOG
+
+2.0.0-b7
+*	NEW: Autoload support for namespace/class.php and namespace_class.php
+*	Generic array utilities moved to Matrix class:
+		pick(), sort(), transpose() and changekey()
+*	Check for short PHP tags added to grab()
+*	Bug fix: error() generates stack trace on 404
+*	Bug fix: <F3:include> inside <F3:repeat>
+*	Minor code refactoring
+
+2.0.0-b6
+*	Reverted sql() back to static; exec() now used for object mode
+*	Framework now supports object notation in set(), get(), clear(), and
+	exists():
+		F3::set('abc',new stdClass);
+		F3::set('abc->x',123);
+		F3::set('abc->y',array());
+		F3::set('abc->y.1','hello');
+		F3::set('abc->y.2',
+			function() {
+				return 'world';
+			});
+		print_r(F3::get('abc'));
+*	DB framework variable is now instantiated automatically, e.g.:
+		$db=new DB('sqlite:/data/test.db');
+		$db->sql('SELECT * FROM mytable;');
+		print_r($this->get('DB'));
+	As a result, no reference to $db is necessary when creating a new
+	Axon:
+		$axon=new Axon('mytable');
+	Note however that Axon constructor's 2nd argument is required when
+	working with multiple databases
+*	dump() method for displaying HTML-friendly PHP expressions
+*	stringify() enhanced
+*	Improved SQL error reporting
+*	Minor code refactoring
+
+2.0.0-b5
+*	Change in behavior: GUI variable dropped in Graphics methods;
+	file argument in invert(), grayscale(), thumb() must specify full path
+*	reroute() now accepts template tokens
+*	Axon plugin now accepts parameterized queries by passing an array as
+	first argument to the load() method:
+		$project->load(array('project_id=:id',array(':id'=>'f3')));
+	which is equivalent to:
+		$project->load('project_id="f3"');
+*	Template tokens can now be applied to class names in dynamic route
+	handlers
+*	Minor code refactoring
+
+2.0.0-b4
+*	NEW: grab() method: retrieves file contents, runs any PHP code in a
+	sandbox and returns the result
+*	NEW: TIDY array variable - used by render() to clean/repair HTML;
+	For an explanation about available configuration options, visit
+	http://tidy.sourceforge.net/docs/quickref.html
+*	NEW: SMTP plugin
+		$mail=new SMTP;
+		$mail->set('from','<admin@example.com>');
+		$mail->set('to','"Mail Recipient" <recipient@test.org>');
+		$mail->set('subject','Thank you');
+		$mail->send('Thanks for supporting Fat-Free!');
+	Accepts cc, bcc, x-mailer, reply-to, mime-version, content-type headers
+*	slug() is now filesystem-friendly
+*	Template tokens for dynamic route handlers
+		F3::route('GET /@token','{@PARAMS.token}');
+		F3::route('GET /page/@action','Page->{@PARAMS.action}');
+*	Bug fix: clear() session handling
+
+2.0.0-b3
+*	NEW: HOSTNAME and PROTOCOL framework variables
+*	Recursive replacement of framework variable variables in arrays
+*	Axon erase() method now has an argument to prevent accidental deletion
+	of records when no prior find()/findOne() was invoked
+*	Function and class/object method chains in route() and input() for
+	backward-compatibility with pre-2.0 versions
+*	Default dimensions for captcha()
+*	Bug fix: sitemap()
+*	Bug fix: beforeRoute()/afterRoute() not executed when custom error page
+	is defined
+*	Bug fix: Premature binding of route handlers which causes unnecessary
+	object loading
+
+2.0.0-b2
+*	Axon/M2 compatibility with previous versions (DB variable)
+*	Additional check if onload() method is declared static in application
+*	Workaround for premature file creation when using SQLite PDO
+*	Support for static methods passed to route() as string
+*	Bug fix: DB error checks
+
+2.0.0-b1
+
+*	NEW: F3::beforeRoute() and F3::afterRoute() event listeners
+*	Axon/M2 event listeners: beforeLoad(), afterLoad(), beforeSave(),
+	afterSave(), beforeErase(), afterErase(), beforeSync(), afterSync()
+*	LANGUAGE/LOCALES auto-detection
+*	Minor bug fixes
+
+2.0.0-alpha
+
+*	Base class stripped to the bare minimum (framework variables, routing,
+	cache engine, error handling); Everything else is a plugin - including
+	the template engine
+*	NEW: Object mode
+		$app=require 'base.php';
+		$app->route('GET /',
+			function() {
+				echo 'Hello, world!';
+			}
+		);
+		$app->run();
+*	NEW: Routing now supports new syntax for object instantiation
+		F3::route('GET /','Main->home');
+	instead of:
+		F3::route('GET /',array(new Main,'home'));
+	which allows $this-> prefix to be used to access framework methods
+	(in the above example, Main class should extend F3instance)
+*	NEW: Fatal errors caught by error and exception handlers
+*	Procedural code support dropped (IMPORTS and routing chains); F3 is now
+	strictly object-oriented
+*	Axon/M2 find() now returns Axon/M2 objects (instead of arrays)
+*	Template engine now allows access to properties of framework variables
+	containing objects:
+		$foo=new stdClass;
+		$foo->phrase='99 bottles of beer';
+		F3::set('myvar',$foo);
+	To display the properties, use the syntax: {@myvar->phrase}
+*	Framework variables defined as anonymous functions:
+		F3::set('func',
+			function($a,$b) {
+				return $a.', '.$b;
+			}
+		);
+	Template engine now interprets token as expected:
+		{@func('hello','world')}
+*	RELEASE variable dropped; DEBUG has been expanded instead:
+		0 - suppress stack trace (for production use)
+		1 - normal stack trace (noise removed)
+		2 - detailed trace

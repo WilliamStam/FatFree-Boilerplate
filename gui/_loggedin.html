@@ -1,0 +1,13 @@
+welcome back - {{ name }} <hr>
+
+	{% if validated == "1" %}
+| <a href="/home">dashboard</a>
+	{% else %}
+	Please validate your email address<br>
+<a href="/register/validate">send validate code</a>
+
+	{% endif %}
+
+<a href="/logout">logout</a>
+	<hr>
+	{{ msg }}

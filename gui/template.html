@@ -1,0 +1,108 @@
+<!doctype html>
+<!--[if lt IE 7 ]>
+<html lang="en" class="no-js ie6"> <![endif]-->
+<!--[if IE 7 ]>
+<html lang="en" class="no-js ie7"> <![endif]-->
+<!--[if IE 8 ]>
+<html lang="en" class="no-js ie8"> <![endif]-->
+<!--[if IE 9 ]>
+<html lang="en" class="no-js ie9"> <![endif]-->
+<!--[if (gt IE 9)|!(IE)]><!-->
+<html lang="en" class="no-js"> <!--<![endif]-->
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+
+	<title>{{ heading }}</title>
+	<meta name="description" content="">
+	<meta name="author" content="">
+
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+	<link rel="shortcut icon" href="/favicon.ico">
+	<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+	<link rel="stylesheet" href="/gui/css/reset.css?v={{version}}">
+	<link rel="stylesheet" href="/gui/css/style.css?v={{version}}">
+	<link rel="stylesheet" href="/gui/css/jquery.fancybox.css?v={{version}}">
+
+	<script src="/gui/js/libs/modernizr-1.7.min.js"></script>
+
+</head>
+<body class="png_bg">
+<div id="shell" class="png_bg">
+	<header id="pageHeader">
+		<div class="pageContent">
+			<div id="masterhead">
+				masterhead stuff
+
+			</div>
+			<div class="clearfix"></div>
+			<nav>
+				<ul>
+					<li	{% if page == "index.html" %} class='selected' {% endif %}><a href="/">Home</a></li>
+					<li><a href="">Why Subscribe</a></li>
+					<li><a href="">Competitions</a></li>
+					<li><a href="">FAQs</a></li>
+					<li><a href="">How to Pay</a></li>
+					<li {% if page == "register.html" || page=="register_alreadyin.html" || page=="register_success.html" %} class='selected' {% endif %}><a href="/register">Email Registration</a></li>
+				</ul>
+			</nav>
+			<div class="clearfix"></div>
+		</div>
+	</header>
+	<div class="clearfix"></div>
+	<div id="page">
+		<div class="pageContent">
+
+			
+			{% if page %}
+			{% include page %}
+			{% endif %}
+		</div>
+	</div>
+	<div class="clearfix"></div>
+	<footer id="pageFooter">
+		<div class="pageContent">
+			<div id="masterfooter">
+
+				footer
+			</div>
+		</div>
+	</footer>
+</div>
+<script src="/gui/js/libs/jquery-1.5.2.js"></script>
+<script src="/gui/js/plugins/jquery.easing.1.3.js"></script>
+<script src="/gui/js/plugins/jquery.cookie.js"></script>
+<script src="/gui/js/plugins/jquery.fancybox.js?v={{version}}"></script>
+
+<script src="/gui/js/script.js?v={{version}}"></script>
+<script>
+	$(document).ready(function() {
+
+		$(window).resize(function() {
+			pageResize()
+		});
+		pageResize();
+
+
+	});
+	function pageResize() {
+		var $page = $("#page");
+		$page.css("min-height", "");
+		var wheight = $(window).height(), pheight = $("#shell").height();
+		if (wheight > pheight) {
+			$page.css("min-height", wheight - ($("#pageHeader").outerHeight() + $("#pageFooter").outerHeight() + 4 ));
+		}
+	}
+</script>
+{% if js %}
+<script src='/gui/js/{{ js }}?v={{version}}'></script>
+{% endif %}
+
+
+<!--[if lt IE 7 ]>
+<script src="/gui/js/libs/dd_belatedpng.js"></script>
+<script> DD_belatedPNG.fix('img, .png_bg, .content');</script>
+<![endif]-->
+</body>
+</html>
