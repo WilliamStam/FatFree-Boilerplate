@@ -54,10 +54,8 @@ class template {
 	function __construct($template) {
 		$this->config['cache_dir'] = F3::get('TEMP');
 		$this->config['template_dir'] = F3::get('GUI');
-
 		Haanga::Configure($this->config);
 		$this->template = $template;
-
 	}
 
 	public function __get($name) {
@@ -85,8 +83,6 @@ class template {
 
 	}
 }
-
-
 
 
 ?>
