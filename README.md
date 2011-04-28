@@ -1,7 +1,7 @@
-# Welcome to this boilerplate
-please note that this is a work in progress. let us know if you have any ideas.
+# Welcome to this unofficial Fat-Free Boilerplate
+Please note that this is a work in progress. Let us know if you have any ideas.
 
-this project uses:
+This boilerplate uses:
 
 * Server Side
 	* FatFree - http://fatfree.sourceforge.net/
@@ -11,8 +11,6 @@ this project uses:
 	* HTML 5 Boilerplate - http://html5boilerplate.com/
 	* jQuery - http://jquery.com/
 
-## Reason using haanga rather than F3's default template engine
+## Reason for using Haanga rather than F3's default template engine
 
- http://gonzalo123.wordpress.com/2011/01/24/php-template-engine-comparison-part-2-versus-plain-php/
-
-
+http://gonzalo123.wordpress.com/2011/01/24/php-template-engine-comparison-part-2-versus-plain-php/
